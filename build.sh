@@ -7,8 +7,8 @@ TYPE="executable"
 BUILD_DIR="build"
 TARGET="SQL-creator"
 CXX="g++"
-CFLAGS="-Wall -I include $(pkg-config --cflags gtkmm-4.0 libxml-2.0)"
-LFLAGS="$(pkg-config --libs gtkmm-4.0 libxml-2.0)"
+CFLAGS="-Wall -I include $(pkg-config --cflags gtkmm-4.0 libxml-2.0 mysqlclient)"
+LFLAGS="$(pkg-config --libs gtkmm-4.0 libxml-2.0 mysqlclient)"
 MODULE_DEPS=""
 
 # Translation

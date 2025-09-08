@@ -2,7 +2,10 @@
 
 #include <main_window.hpp>
 
-SQLApp::SQLApp() : Gtk::Application("com.codigoymate.sql-creator") {}
+#include <locale.h>
+#include <libintl.h>
+
+SQLApp::SQLApp() : Gtk::Application("org.jason80.SQL-creator") {}
 
 void SQLApp::on_activate() {
 
@@ -22,6 +25,11 @@ void SQLApp::on_activate() {
 }
 
 int main(int argc, char *argv[]) {
+
+	setlocale(LC_ALL, "");
+    bindtextdomain("SQL-creator", "./locales");
+    textdomain("SQL-creator");
+
 	auto app = std::make_shared<SQLApp>();
 	return app->run(argc, argv);
 }
