@@ -9,6 +9,12 @@ SQLApp::SQLApp() : Gtk::Application("org.jason80.SQL-creator") {}
 
 void SQLApp::on_activate() {
 
+	// Actions
+
+	this->add_action("connect", [](){
+		g_print("Connect action triggered!\n");
+	});
+
 	// Style
 	auto provider = Gtk::CssProvider::create();
 	provider->load_from_path("res/style.css");

@@ -2,8 +2,32 @@
 <!-- Created with Cambalache 0.96.1 -->
 <interface>
   <!-- interface-name query-creator.ui -->
+  <requires lib="gio" version="2.0"/>
   <requires lib="gtk" version="4.6"/>
   <object class="GtkApplicationWindow" id="main-window">
     <property name="title" translatable="yes">SQL Query Creator</property>
+    <property name="titlebar">
+      <object class="GtkHeaderBar">
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="active">True</property>
+            <property name="icon-name">open-menu-symbolic</property>
+            <property name="menu-model">main-menu</property>
+          </object>
+        </child>
+      </object>
+    </property>
   </object>
+  <menu id="main-menu">
+    <item>
+      <attribute name="action">app.connect</attribute>
+      <attribute name="icon">connect_creating</attribute>
+      <attribute name="label" translatable="yes">Connect</attribute>
+    </item>
+    <item>
+      <attribute name="action">app.disconnect</attribute>
+      <attribute name="icon">gtk-disconnect</attribute>
+      <attribute name="label" translatable="yes">Disconnet</attribute>
+    </item>
+  </menu>
 </interface>
