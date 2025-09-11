@@ -19,4 +19,7 @@ public:
 
 private:
 	std::shared_ptr<SQLApp> app;
+	Gtk::TextView *sql_entry;
+
+	bool sql_entry_key_pressed(guint keyval, guint keycode, Gdk::ModifierType state);
 };
