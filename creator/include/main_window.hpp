@@ -7,7 +7,13 @@ class SQLApp;
 
 class MainWindow : public Gtk::ApplicationWindow {
 public:
-	MainWindow(std::shared_ptr<SQLApp> app);
+
+	MainWindow(BaseObjectType* cobject,
+            const Glib::RefPtr<Gtk::Builder>& builder,
+			std::shared_ptr<SQLApp> app);
+
+    /*MainWindow(const MainWindow&) = delete;
+    MainWindow& operator=(const MainWindow&) = delete;*/
 
 	void init();
 

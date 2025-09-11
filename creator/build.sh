@@ -16,7 +16,7 @@ DOMAIN="$TARGET"
 LOCALE_DIR="locales"
 LANGUAGES="es"
 POT_FILE="$DOMAIN.pot"
-TRANSL_SRC_EXTRA=""
+TRANSL_SRC_EXTRA="res/query-creator.ui"
 
 ##############################################
 #Internals:

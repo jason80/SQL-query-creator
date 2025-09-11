@@ -6,9 +6,11 @@
 
 #define _(STRING) gettext(STRING)
 
-MainWindow::MainWindow(std::shared_ptr<SQLApp> app) : app{app} {}
+
+MainWindow::MainWindow(BaseObjectType* obj,
+            const Glib::RefPtr<Gtk::Builder>& builder,
+			std::shared_ptr<SQLApp> app) : Gtk::ApplicationWindow(obj), app(app) {}
 
 void MainWindow::init() {
-	set_title(_("SQL Query Creator"));
-	set_default_size(1000, 600);
+	
 }
