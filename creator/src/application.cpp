@@ -7,14 +7,18 @@
 #include <locale.h>
 #include <libintl.h>
 
+#include <connection.hpp>
+
 SQLApp::SQLApp() : Gtk::Application("org.jason80.SQL-creator") {}
 
 void SQLApp::on_activate() {
 
 	// Actions
-
 	this->add_action("connect", [this](){
 		ConnectionWindow::show(this->shared_from_this());
+	});
+	this->add_action("disconnect", [this](){
+		Connection::disconnect();
 	});
 
 	// Style

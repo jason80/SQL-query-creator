@@ -16,4 +16,9 @@ public:
 private:
 	std::shared_ptr<SQLApp> app;
 	static std::shared_ptr<ConnectionWindow> window;
+
+	Gtk::Entry *host_entry;
+	Gtk::Entry *user_entry;
+	Gtk::Entry *pass_entry;
+	Gtk::Entry *database_entry;
 };
