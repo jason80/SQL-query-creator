@@ -18,6 +18,7 @@ public:
 	static std::shared_ptr<ResultSet> db_query(const std::string sql);
 
 	friend ResultSet;
+	friend class MySQLError;
 
 private:
 	static MYSQL *connection;

@@ -5,6 +5,8 @@
 
 #include <connection.hpp>
 
+#include <utils.hpp>
+
 ConnectionWindow::ConnectionWindow(BaseObjectType* cobject,
 	const Glib::RefPtr<Gtk::Builder> builder,
 	std::shared_ptr<SQLApp> app) : Gtk::Window(cobject), app(app) {
@@ -18,10 +20,13 @@ ConnectionWindow::ConnectionWindow(BaseObjectType* cobject,
 
 	auto connect_button = builder->get_widget<Gtk::Button>("connect-button");
 	connect_button->signal_clicked().connect([this]() {
-		this->close();
-		Connection::connect(host_entry->get_text(),
+		if (!Connection::connect(host_entry->get_text(),
 				user_entry->get_text(), pass_entry->get_text(),
-				database_entry->get_text());
+				database_entry->get_text())) {
+			mysql_error_dialog(this);
+		} else {
+			this->close();
+		}
 	});
 }
 
