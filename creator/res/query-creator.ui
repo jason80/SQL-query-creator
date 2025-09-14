@@ -49,4 +49,135 @@
       <attribute name="label" translatable="yes">Disconnet</attribute>
     </item>
   </menu>
+  <object class="GtkWindow" id="connection-window">
+    <property name="default-width">300</property>
+    <property name="modal">True</property>
+    <property name="resizable">False</property>
+    <property name="title" translatable="yes">Connect to Database</property>
+    <child>
+      <object class="GtkGrid">
+        <property name="column-spacing">7</property>
+        <property name="row-spacing">10</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="halign">start</property>
+            <property name="label" translatable="yes">Host</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="column-span">1</property>
+              <property name="row">0</property>
+              <property name="row-span">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="host-entry">
+            <property name="buffer">
+              <object class="GtkEntryBuffer">
+                <property name="text">localhost</property>
+              </object>
+            </property>
+            <property name="hexpand">True</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="column-span">1</property>
+              <property name="row">0</property>
+              <property name="row-span">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="halign">start</property>
+            <property name="label" translatable="yes">User</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="column-span">1</property>
+              <property name="row">1</property>
+              <property name="row-span">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="user-entry">
+            <property name="buffer">
+              <object class="GtkEntryBuffer">
+                <property name="text">root</property>
+              </object>
+            </property>
+            <property name="hexpand">True</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="column-span">1</property>
+              <property name="row">1</property>
+              <property name="row-span">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="halign">start</property>
+            <property name="label" translatable="yes">Password</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="column-span">1</property>
+              <property name="row">2</property>
+              <property name="row-span">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="pass-entry">
+            <property name="buffer">
+              <object class="GtkPasswordEntryBuffer"/>
+            </property>
+            <property name="hexpand">True</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="column-span">1</property>
+              <property name="row">2</property>
+              <property name="row-span">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="connect-button">
+            <property name="halign">center</property>
+            <property name="label" translatable="yes">Connect</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="column-span">2</property>
+              <property name="row">4</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Database</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="column-span">1</property>
+              <property name="row">3</property>
+              <property name="row-span">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="database-entry">
+            <property name="buffer">
+              <object class="GtkEntryBuffer">
+                <property name="text">mysql</property>
+              </object>
+            </property>
+            <layout>
+              <property name="column">1</property>
+              <property name="column-span">1</property>
+              <property name="row">3</property>
+              <property name="row-span">1</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
 </interface>

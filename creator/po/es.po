@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-10 23:00-0300\n"
+"POT-Creation-Date: 2025-09-13 21:53-0300\n"
 "PO-Revision-Date: 2025-09-08 20:04-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,14 +17,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: res/query-creator.ui:8
+#: res/query-creator.ui:10
 msgid "SQL Query Creator"
 msgstr "Creador de Consultas SQL"
 
-#: res/query-creator.ui:25
+#: res/query-creator.ui:44 res/query-creator.ui:146
 msgid "Connect"
 msgstr "Conectar"
 
-#: res/query-creator.ui:30
+#: res/query-creator.ui:49
 msgid "Disconnet"
 msgstr "Desconectar"
+
+#: res/query-creator.ui:56
+msgid "Connect to Database"
+msgstr "Conectar a Base de Datos"
+
+#: res/query-creator.ui:64
+msgid "Host"
+msgstr "Host"
+
+#: res/query-creator.ui:92
+msgid "User"
+msgstr "Usuario"
+
+#: res/query-creator.ui:120
+msgid "Password"
+msgstr "Clave"
+
+#: res/query-creator.ui:156
+msgid "Database"
+msgstr "Base de datos"

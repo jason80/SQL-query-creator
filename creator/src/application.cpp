@@ -2,6 +2,8 @@
 
 #include <main_window.hpp>
 
+#include <connection_window.hpp>
+
 #include <locale.h>
 #include <libintl.h>
 
@@ -11,8 +13,8 @@ void SQLApp::on_activate() {
 
 	// Actions
 
-	this->add_action("connect", [](){
-		g_print("Connect action triggered!\n");
+	this->add_action("connect", [this](){
+		ConnectionWindow::show(this->shared_from_this());
 	});
 
 	// Style
