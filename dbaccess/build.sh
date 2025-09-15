@@ -7,8 +7,8 @@ TYPE="static"
 BUILD_DIR="build"
 TARGET="dbaccess"
 CXX="g++"
-CFLAGS="-g -Wall -I include $(pkg-config --cflags gtkmm-4.0 libxml-2.0 mysqlclient)"
-LFLAGS="$(pkg-config --libs gtkmm-4.0 libxml-2.0 mysqlclient)"
+CFLAGS="-Wall -I include $(pkg-config --cflags gtkmm-4.0 libxml-2.0) $(mysql_config --cflags)"
+LFLAGS="$(pkg-config --libs gtkmm-4.0 libxml-2.0) $(mysql_config --libs)"
 MODULE_DEPS=""
 
 # Translation

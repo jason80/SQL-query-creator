@@ -3,7 +3,9 @@
 #include <string>
 #include <memory>
 
-class MYSQL;
+struct st_mysql;
+typedef struct st_mysql MYSQL;
+
 class ResultSet;
 
 class Connection {

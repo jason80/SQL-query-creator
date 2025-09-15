@@ -4,7 +4,9 @@
 #include <unordered_map>
 #include <string>
 
-class MYSQL_RES;
+struct st_mysql_res;
+typedef struct st_mysql_res MYSQL_RES;
+
 class Row;
 
 class ResultSet {
