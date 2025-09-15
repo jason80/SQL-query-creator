@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-14 11:54-0300\n"
+"POT-Creation-Date: 2025-09-15 19:09-0300\n"
 "PO-Revision-Date: 2025-09-08 20:04-0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,10 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/myerror.cpp:13
-msgid "(no message)"
-msgstr "(Sin mensaje)"
-
 #: src/utils.cpp:14
 msgid "MySQL Error"
 msgstr "Error MySQL"
@@ -29,25 +25,25 @@ msgstr "Error MySQL"
 msgid "Code: "
 msgstr "Código: "
 
-#: src/utils.cpp:20
+#: src/utils.cpp:19
 msgid "Message: "
 msgstr "Mensaje: "
 
-#: src/utils.cpp:36
+#: src/utils.cpp:35
 msgid "Close"
 msgstr "Cerrar"
 
-#: src/utils.cpp:37
+#: src/utils.cpp:36
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/utils.cpp:40
+#: src/utils.cpp:39
 msgid "Details"
 msgstr "Detalles"
 
-#: src/utils.cpp:51
-msgid "Full MySQL error details"
-msgstr "Detalle completo del error"
+#: src/myerror.cpp:13
+msgid "(no message)"
+msgstr "(Sin mensaje)"
 
 #: res/query-creator.ui:10
 msgid "SQL Query Creator"

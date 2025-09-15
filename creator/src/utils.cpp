@@ -16,7 +16,6 @@ void mysql_error_dialog(Gtk::Window *parent) {
 
 	std::ostringstream secondary_ss;
 	secondary_ss << _("Code: ") << error->get_code() << "\n";
-	secondary_ss << "SQLSTATE: " << error->get_sqlstate() << "\n";
 	secondary_ss << _("Message: ") << error->get_message();
 	std::string secondary = secondary_ss.str();
 
@@ -36,7 +35,7 @@ void mysql_error_dialog(Gtk::Window *parent) {
 	dialog->add_button(_("Close"), Gtk::ResponseType::CLOSE);
 	dialog->add_button(_("Copy"), Gtk::ResponseType::APPLY);
 
-	
+
 	Gtk::Expander *exp = Gtk::make_managed<Gtk::Expander>(_("Details"));
 	Gtk::Box *exp_box = Gtk::make_managed<Gtk::Box>(Gtk::Orientation::VERTICAL, 6);
 
@@ -48,7 +47,6 @@ void mysql_error_dialog(Gtk::Window *parent) {
 
 	auto buffer = Gtk::TextBuffer::create();
 	std::ostringstream details_ss;
-	details_ss << _("Full MySQL error details") << ":\n";
 	if (error->get_code() != 0) details_ss << "Errno: " << error->get_code() << "\n";
 	if (!error->get_sqlstate().empty()) details_ss << "SQLSTATE: " << error->get_sqlstate() << "\n";
 	details_ss << "Message: " << error->get_message() << "\n";
