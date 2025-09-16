@@ -26,6 +26,7 @@ const bool Connection::connect(const std::string host,
 
 void Connection::disconnect() {
 	mysql_close(connection);
+	connection = nullptr;
 	cout << "Disconnected." << endl;
 }
 

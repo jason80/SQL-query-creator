@@ -4,8 +4,7 @@
 #include <unordered_map>
 #include <string>
 
-struct st_mysql_res;
-typedef struct st_mysql_res MYSQL_RES;
+#include <mysql/mysql.h>
 
 class Row;
 

@@ -7,7 +7,7 @@ TYPE="executable"
 BUILD_DIR="build"
 TARGET="SQL-creator"
 CXX="g++"
-CFLAGS="-g -Wall -I include -I ../dbaccess/include $(pkg-config --cflags gtkmm-4.0 libxml-2.0) $(mysql_config --cflags)"
+CFLAGS="-Wall -I include -I ../dbaccess/include $(pkg-config --cflags gtkmm-4.0 libxml-2.0) $(mysql_config --cflags)"
 LFLAGS="-L ../dbaccess/build -ldbaccess $(pkg-config --libs gtkmm-4.0 libxml-2.0) $(mysql_config --libs)"
 MODULE_DEPS="../dbaccess/build/libdbaccess.a"
 

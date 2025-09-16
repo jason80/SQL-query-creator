@@ -3,8 +3,7 @@
 #include <string>
 #include <memory>
 
-struct st_mysql;
-typedef struct st_mysql MYSQL;
+#include <mysql/mysql.h>
 
 class ResultSet;
 
@@ -16,6 +15,8 @@ public:
 	static const bool connect(const std::string host, const std::string user,
 			const std::string pass, const std::string database);
 	static void disconnect();
+
+	static bool is_connected() { return connection != nullptr; }
 
 	static std::shared_ptr<ResultSet> db_query(const std::string sql);
 
