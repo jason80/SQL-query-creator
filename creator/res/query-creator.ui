@@ -20,20 +20,28 @@
     </property>
     <child>
       <object class="GtkPaned">
+        <property name="end-child">
+          <object class="GtkScrolledWindow">
+            <child>
+              <object class="GtkColumnView" id="rs-table"/>
+            </child>
+          </object>
+        </property>
         <property name="orientation">vertical</property>
         <property name="shrink-end-child">False</property>
         <property name="shrink-start-child">False</property>
         <property name="start-child">
-          <object class="GtkTextView" id="sql-entry">
-            <property name="hscroll-policy">natural</property>
-            <style>
-              <class name="sql-area"/>
-            </style>
+          <object class="GtkScrolledWindow">
+            <child>
+              <object class="GtkTextView" id="sql-entry">
+                <property name="hscroll-policy">natural</property>
+                <style>
+                  <class name="sql-area"/>
+                </style>
+              </object>
+            </child>
           </object>
         </property>
-        <child>
-          <object class="GtkColumnView"/>
-        </child>
       </object>
     </child>
   </object>

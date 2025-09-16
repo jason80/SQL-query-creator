@@ -14,6 +14,7 @@ ResultSet::ResultSet() {
 
 		// Store field names
 		for (unsigned i = 0; i < mysql_num_fields(res); i ++) {
+			field_names.push_back(std::string(_fields[i].name));
 			fields[std::string(_fields[i].name)] = i;
 		}
 	}
