@@ -9,6 +9,8 @@
 
 #include <connection.hpp>
 
+#include <utils.hpp>
+
 SQLApp::SQLApp() : Gtk::Application("org.jason80.SQL-creator") {}
 
 void SQLApp::on_activate() {
@@ -23,14 +25,14 @@ void SQLApp::on_activate() {
 
 	// Style
 	auto provider = Gtk::CssProvider::create();
-	provider->load_from_path("res/style.css");
+	provider->load_from_path(valid_path("res/style.css"));
 	auto display = Gdk::Display::get_default();
 	Gtk::StyleContext::add_provider_for_display(
 		display, provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 	// Builder
 
-	auto builder = Gtk::Builder::create_from_file("res/query-creator.ui");
+	auto builder = Gtk::Builder::create_from_file(valid_path("res/query-creator.ui"));
 
 	main_window = Gtk::Builder::get_widget_derived<MainWindow>(
 			builder, "main-window", shared_from_this());

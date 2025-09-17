@@ -83,3 +83,11 @@ void mysql_error_dialog(Gtk::Window *parent) {
 
 	dialog->show();
 }
+
+const std::string valid_path(const std::string path) {
+	if (access(path.c_str(), F_OK) == 0) {
+		return path;
+	}
+
+	return "/usr/local/share/SQL-creator/" + path;
+}

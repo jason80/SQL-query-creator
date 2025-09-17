@@ -31,7 +31,7 @@ ConnectionWindow::ConnectionWindow(BaseObjectType* cobject,
 }
 
 void ConnectionWindow::show(std::shared_ptr<SQLApp> app) {
-	auto builder = Gtk::Builder::create_from_file("res/query-creator.ui");
+	auto builder = Gtk::Builder::create_from_file(valid_path("res/query-creator.ui"));
 
 	auto window = Gtk::Builder::get_widget_derived<ConnectionWindow>(
 			builder, "connection-window", app);

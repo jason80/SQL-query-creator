@@ -11,6 +11,15 @@ CFLAGS="-Wall -I include $(pkg-config --cflags gtkmm-4.0 libxml-2.0) $(mysql_con
 LFLAGS="$(pkg-config --libs gtkmm-4.0 libxml-2.0) $(mysql_config --libs)"
 MODULE_DEPS=""
 
+# Install (for executable and shared)
+INSTALL_PREFIX="/usr/local"
+INSTALL_BIN="$INSTALL_PREFIX/bin"
+INSTALL_LIB="$INSTALL_PREFIX/lib"
+INSTALL_INC="$INSTALL_PREFIX/include/$TARGET"
+INSTALL_RES="$INSTALL_PREFIX/share/$TARGET"
+
+INSTALL_EXTRA=""		# Extra resources directories (space separated)
+
 # Translation
 DOMAIN="$TARGET"
 LOCALE_DIR="locales"
@@ -77,7 +86,7 @@ build_objects() {
 			REBUILD_TARGET=true
 		elif [[ -f "$DEP_FILE" ]]; then
 
-    		local DEPENDENCIES=$(sed ':a;N;$!ba;s/\\\n//g' "$DEP_FILE" | awk '{$1=""; sub(/^ /, ""); print}' | tr ' ' '\n')
+			local DEPENDENCIES=$(sed ':a;N;$!ba;s/\\\n//g' "$DEP_FILE" | awk '{$1=""; sub(/^ /, ""); print}' | tr ' ' '\n')
 
 			for DEP in $DEPENDENCIES; do
 				if [[ -f "$DEP" && "$DEP" -nt "$OBJ_FILE" ]]; then
@@ -155,7 +164,7 @@ build_target() {
 
 	if [[ $BUILD_ERROR == true ]]; then
 		echo "Build process stopped due to compilation errors."
-        exit 1
+		exit 1
 	fi
 
 	check_libraries
@@ -171,67 +180,123 @@ build_target() {
 	fi
 }
 
-build_translations() {
-    echo "Build translations ..."
+install_target() {
 
-    # Remove the wildcard (*.) to extract the extension (e.g. c from *.c)
-    EXT="${SRC_EXT#*.}"
+	if [[ "$TYPE" == "static" ]]; then
+		echo "Installing static library is not supported."
+		exit 1
+	fi
 
-    # Find all source files matching the extension
-    SRC_FILES=$(find "$SRC_DIR" -type f -name "*.${EXT}")
+	mkdir -p "$INSTALL_BIN" "$INSTALL_LIB"
 
-    # Append extra translation sources
-    ALL_SRC_FILES="$SRC_FILES $TRANSL_SRC_EXTRA"
+	if [[ "$TYPE" == "executable" ]]; then
+		FILE="$BUILD_DIR/$TARGET"
+		if [[ -f "$FILE" ]]; then
+			echo "Installing executable to $INSTALL_BIN..."
+			install -m 755 "$FILE" "$INSTALL_BIN/"
+		else
+			echo "Error: executable $FILE not found. Run build first."
+			exit 1
+		fi
 
-    # Remove leading/trailing spaces
-    ALL_SRC_FILES=$(echo "$ALL_SRC_FILES" | xargs)
+	elif [[ "$TYPE" == "shared" ]]; then
+		FILE="$BUILD_DIR/lib$TARGET.so"
+		if [[ -f "$FILE" ]]; then
+			echo "Installing shared library to $INSTALL_LIB..."
+			install -m 755 "$FILE" "$INSTALL_LIB/"
+			echo "Running ldconfig..."
+			sudo ldconfig
+		else
+			echo "Error: shared library $FILE not found. Run build first."
+			exit 1
+		fi
 
-    if [[ -z "$ALL_SRC_FILES" ]]; then
-        echo "No source files found for translation."
-        return
-    fi
+		# Only headers for shared
+		if [[ -d "include" ]]; then
+			echo "Installing headers to $INSTALL_INC..."
+			mkdir -p "$INSTALL_INC"
+			cp -r include/* "$INSTALL_INC/"
+		fi
+	fi
 
-    # Determine if POT needs to be updated
-    local regenerate_pot=false
-    if [[ ! -f "$POT_FILE" ]]; then
-        regenerate_pot=true
-    else
-        for SRC in $ALL_SRC_FILES; do
-            if [[ -f "$SRC" && "$SRC" -nt "$POT_FILE" ]]; then
-                regenerate_pot=true
-                break
+	# Extra resources
+    if [[ -n "$INSTALL_EXTRA" ]]; then
+        echo "Installing extra resources to $INSTALL_RES..."
+        mkdir -p "$INSTALL_RES"
+        for RES_DIR in $INSTALL_EXTRA; do
+            if [[ -d "$RES_DIR" ]]; then
+                echo "  -> Copying $RES_DIR ..."
+                cp -r "$RES_DIR" "$INSTALL_RES/"
+            else
+                echo "  -> Skipped $RES_DIR (not a directory)"
             fi
         done
     fi
 
-    if [[ "$regenerate_pot" == true ]]; then
-        echo "Generating updated POT file..."
-        eval $XGETTEXT
-    else
-        echo "POT file $POT_FILE is up to date."
-    fi
+	echo "Install complete."
+}
 
-    for LANG in $LANGUAGES; do
-        local PO_FILE="po/${LANG}.po"
-        local MO_FILE="$LOCALE_DIR/$LANG/LC_MESSAGES/$DOMAIN.mo"
+build_translations() {
+	echo "Build translations ..."
 
-        if [[ ! -f "$PO_FILE" ]]; then
-            echo "Creating new PO file for language $LANG..."
-            mkdir -p "$(dirname "$PO_FILE")"
-            eval $MSGINIT
-        else
-            if [[ "$POT_FILE" -nt "$PO_FILE" ]]; then
-                echo "Merging changes into $PO_FILE..."
-                eval $MSGMERGE
-            else
-                echo "PO file $PO_FILE is up to date."
-            fi
-        fi
+	# Remove the wildcard (*.) to extract the extension (e.g. c from *.c)
+	EXT="${SRC_EXT#*.}"
 
-        echo "Generating MO file for $LANG..."
-        mkdir -p "$(dirname "$MO_FILE")"
-        eval $MSGFMT
-    done
+	# Find all source files matching the extension
+	SRC_FILES=$(find "$SRC_DIR" -type f -name "*.${EXT}")
+
+	# Append extra translation sources
+	ALL_SRC_FILES="$SRC_FILES $TRANSL_SRC_EXTRA"
+
+	# Remove leading/trailing spaces
+	ALL_SRC_FILES=$(echo "$ALL_SRC_FILES" | xargs)
+
+	if [[ -z "$ALL_SRC_FILES" ]]; then
+		echo "No source files found for translation."
+		return
+	fi
+
+	# Determine if POT needs to be updated
+	local regenerate_pot=false
+	if [[ ! -f "$POT_FILE" ]]; then
+		regenerate_pot=true
+	else
+		for SRC in $ALL_SRC_FILES; do
+			if [[ -f "$SRC" && "$SRC" -nt "$POT_FILE" ]]; then
+				regenerate_pot=true
+				break
+			fi
+		done
+	fi
+
+	if [[ "$regenerate_pot" == true ]]; then
+		echo "Generating updated POT file..."
+		eval $XGETTEXT
+	else
+		echo "POT file $POT_FILE is up to date."
+	fi
+
+	for LANG in $LANGUAGES; do
+		local PO_FILE="po/${LANG}.po"
+		local MO_FILE="$LOCALE_DIR/$LANG/LC_MESSAGES/$DOMAIN.mo"
+
+		if [[ ! -f "$PO_FILE" ]]; then
+			echo "Creating new PO file for language $LANG..."
+			mkdir -p "$(dirname "$PO_FILE")"
+			eval $MSGINIT
+		else
+			if [[ "$POT_FILE" -nt "$PO_FILE" ]]; then
+				echo "Merging changes into $PO_FILE..."
+				eval $MSGMERGE
+			else
+				echo "PO file $PO_FILE is up to date."
+			fi
+		fi
+
+		echo "Generating MO file for $LANG..."
+		mkdir -p "$(dirname "$MO_FILE")"
+		eval $MSGFMT
+	done
 }
 
 # Sets the current directory
@@ -259,9 +324,15 @@ case "$1" in
 			gdb "./$BUILD_DIR/$TARGET"
 		fi
 		;;
+
+	install )
+		build_target
+		install_target
+		;;
+
 	translations|transl )
-        build_translations
-        ;;
+		build_translations
+		;;
 	* )
 		echo "Usage: $0 [build|clean|run|debug|translations|transl]"
 		exit 1
