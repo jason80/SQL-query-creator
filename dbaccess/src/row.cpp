@@ -4,10 +4,12 @@ Row::Row(char **mysql_row, std::unordered_map<std::string, unsigned> &fields) :
 		mysql_row{mysql_row}, fields{fields} {}
 
 const std::string Row::get_string(const std::string field_name) const {
+	if (!mysql_row[fields[field_name]]) return "NULL";
 	return mysql_row[fields[field_name]];
 }
 
 const std::string Row::get_string(const unsigned field_id) const {
+	if (!mysql_row[field_id]) return "NULL";
 	return mysql_row[field_id];
 }
 
